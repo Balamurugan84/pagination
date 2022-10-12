@@ -11,12 +11,16 @@ router.get('/getAllPage', async(req, res)=>{
 
         const limit = parseInt(size)
         const skip = (page - 1) * size;
+        
+         const total = (await product.find()).length
+        // console.log("total", total)
 
         const data = await product.find().limit(limit).skip(skip);
         // console.log("data", data)
         if(data.length){
-        // return res.status(200).json({'status':'success', 'message':'Data added', 'result': data})  
-          return res.send({page, size, "result":data})
+        // return res.status(200).json({'status':'success', 'message':'Data added', 'result': data}) 
+//           return res.status(200).json({page, size, "total":total, 'result': data})  
+          return res.send({page, size, "total":total, "result":data})
         }else{
             return res.status(400).json({'status':'failed', 'message':'data not faound'})
         }
